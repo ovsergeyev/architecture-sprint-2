@@ -70,10 +70,10 @@ volumes:
   shard1-data:
   shard2-data:
 
-networks:
-  app-network:
-    driver: bridge
-    ipam:
-      driver: default
-      config:
-        - subnet: 173.17.0.0/16
+# networks:
+#   app-network:
+#     driver: bridge
+#     ipam:
+#       driver: default
+#       config:
+#         - subnet: 173.17.0.0/16
