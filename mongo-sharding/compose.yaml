@@ -65,7 +65,6 @@ services:
       start_period: 10s
 
 
-
 volumes:
   shard1-data:
   shard2-data:
