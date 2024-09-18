@@ -10,7 +10,7 @@ jobs:
       - name: Build
         run: |
           cd /home/oleg/projects/lesson2/architecture-sprint-2
-          git checkout main
+          git checkout schema_1
           git pull
           export $(cat .env | xargs)
           docker-compose -f compose.yaml stop
