@@ -7,9 +7,9 @@ services:
     image: kazhem/pymongo_api:1.0.0
     ports:
       - 8080:8080
-    # networks:
-    #   app-network:
-    #     ipv4_address: 173.17.0.1
+    networks:
+      app-network:
+        ipv4_address: 173.17.0.1
     environment:
       MONGODB_URL: "mongodb://mongodb1"
       MONGODB_DATABASE_NAME: "somedb"
@@ -42,10 +42,10 @@ services:
         "--port",
         "27018"
       ]
-    # healthcheck:
-    #   test: [ "CMD", "mongo", "--eval", "db.adminCommand('ping')" ]
-    #   interval: 5s
-    #   start_period: 10s
+    healthcheck:
+      test: [ "CMD", "mongo", "--eval", "db.adminCommand('ping')" ]
+      interval: 5s
+      start_period: 10s
 
   shard2:
     image: mongo:latest
@@ -53,24 +53,24 @@ services:
     restart: always
     ports:
       - 27019:27017
-    # networks:
-    #   app-network:
-    #     ipv4_address: 173.17.0.8
+    networks:
+      app-network:
+        ipv4_address: 173.17.0.8
     volumes:
       - shard2-data:/data/db
-    # command:
-    #   [
-    #     "--shardsvr", //запуск в режиме шардинга
-    #     "--replSet",
-    #     "shard2", //название реплик
-    #     "--bind_ip_all", // обратите внимание - она отличается от реплики 1-го шарда
-    #     "--port",
-    #     "27019"
-    #   ]
-    # healthcheck:
-    #   test: [ "CMD", "mongo", "--eval", "db.adminCommand('ping')" ]
-    #   interval: 5s
-    #   start_period: 10s
+    command:
+      [
+        "--shardsvr", //запуск в режиме шардинга
+        "--replSet",
+        "shard2", //название реплик
+        "--bind_ip_all", // обратите внимание - она отличается от реплики 1-го шарда
+        "--port",
+        "27019"
+      ]
+    healthcheck:
+      test: [ "CMD", "mongo", "--eval", "db.adminCommand('ping')" ]
+      interval: 5s
+      start_period: 10s
 
 
 volumes:
