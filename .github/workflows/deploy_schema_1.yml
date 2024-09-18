@@ -3,7 +3,6 @@ on:
   push:
     branches:
       - schema_1
-
 jobs:
   deploy_schema_1:
     runs-on: self-hosted
