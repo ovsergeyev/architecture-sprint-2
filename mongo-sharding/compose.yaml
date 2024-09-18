@@ -20,7 +20,7 @@ services:
     container_name: shard1
     restart: always
     ports:
-      - 27018:27018
+      - 27018:27017
     networks:
       app-network:
         ipv4_address: 173.17.0.9
@@ -45,7 +45,7 @@ services:
     container_name: shard2
     restart: always
     ports:
-      - 27019:27019
+      - 27019:27017
     networks:
       app-network:
         ipv4_address: 173.17.0.8
