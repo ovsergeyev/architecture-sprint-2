@@ -14,6 +14,7 @@ services:
       MONGODB_URL: "mongodb://mongodb1"
       MONGODB_DATABASE_NAME: "somedb"
 
+
   shard1:
     image: mongo:latest
     container_name: shard1
