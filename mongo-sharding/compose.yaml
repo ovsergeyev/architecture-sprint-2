@@ -99,6 +99,7 @@ services:
 
 
 volumes:
+  config-data:
   shard1-data:
   shard2-data:
 
