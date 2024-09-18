@@ -9,7 +9,7 @@ jobs:
     steps:
       - name: Build
         run: |
-          cd /home/oleg/projects/lesson2/architecture-sprint-2
+          cd /home/oleg/projects/lesson2/architecture-sprint-2/base
           git checkout schema_1
           git pull
           export $(cat .env | xargs)
