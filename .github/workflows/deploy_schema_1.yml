@@ -16,3 +16,9 @@ jobs:
           export $(cat .env | xargs)
           docker-compose -f compose.yaml stop
           docker-compose -f compose.yaml up -d --build
+          cd /home/oleg/projects/lesson2/architecture-sprint-2/mongo-sharding
+          git checkout schema_1
+          git pull
+          export $(cat .env | xargs)
+          docker-compose -f compose.yaml stop
+          docker-compose -f compose.yaml up -d --build
