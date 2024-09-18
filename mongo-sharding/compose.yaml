@@ -7,6 +7,9 @@ services:
     image: kazhem/pymongo_api:1.0.0
     ports:
       - 8080:8080
+    networks:
+      app-network:
+        ipv4_address: 173.17.0.1
     environment:
       MONGODB_URL: "mongodb://mongodb1"
       MONGODB_DATABASE_NAME: "somedb"
@@ -64,4 +67,13 @@ services:
 
 
 volumes:
-  mongodb1_data_container:
+  shard1-data:
+  shard2-data:
+
+networks:
+  app-network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 173.17.0.0/16
