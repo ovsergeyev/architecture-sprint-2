@@ -22,26 +22,51 @@ services:
   #   volumes:
   #     - mongodb1_data_container:/data/db
 
+  configSrv:
+    image: mongo:latest
+    container_name: configSrv
+    restart: always
+    ports:
+      - "27017:27017"
+    networks:
+      app-network:
+        ipv4_address: 173.17.0.10
+    volumes:
+      - config-data:/data/db
+    command:
+      [
+        "--configsvr",
+        "--replSet",
+        "config_server",
+        "--bind_ip_all",
+        "--port",
+        "27017"
+      ]
+    healthcheck:
+      test: [ "CMD", "mongo", "--eval", "db.adminCommand('ping')" ]
+      interval: 5s
+      start_period: 10s
+
   shard1:
     image: mongo:latest
     container_name: shard1
     restart: always
-    ports:
-      - 27018:27017
+    # ports:
+    #   - 27018:27017
     networks:
       app-network:
         ipv4_address: 173.17.0.9
     volumes:
       - shard1-data:/data/db
-    # command:
-    #   [
-    #     "--shardsvr",
-    #     "--replSet",
-    #     "shard1", //название реплики
-    #     "--bind_ip_all",
-    #     "--port",
-    #     "27018"
-    #   ]
+    command:
+      [
+        "--shardsvr",
+        "--replSet",
+        "shard1", //название реплики
+        "--bind_ip_all",
+        "--port",
+        "27018"
+      ]
     healthcheck:
       test: [ "CMD", "mongo", "--eval", "db.adminCommand('ping')" ]
       interval: 5s
