@@ -2,7 +2,8 @@ name: Deploy Lesson2
 on:
   push:
     branches:
-      - main
+      - schema_1
+
 jobs:
   deploy_schema_1:
     runs-on: self-hosted
