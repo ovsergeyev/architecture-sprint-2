@@ -56,15 +56,15 @@ services:
     #     ipv4_address: 173.17.0.10
     volumes:
       - config-data:/data/db
-    command:
-      [
-        "--configsvr",
-        "--replSet",
-        "config_server",
-        "--bind_ip_all",
-        "--port",
-        "27017"
-      ]
+    # command:
+    #   [
+    #     "--configsvr",
+    #     "--replSet",
+    #     "config_server",
+    #     "--bind_ip_all",
+    #     "--port",
+    #     "27017"
+    #   ]
     healthcheck:
       test: [ "CMD", "mongo", "--eval", "db.adminCommand('ping')" ]
       interval: 5s
