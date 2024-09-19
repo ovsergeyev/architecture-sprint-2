@@ -7,11 +7,13 @@ services:
     image: kazhem/pymongo_api:1.0.0
     ports:
       - 8080:8080
+    depends_on:
+      - mongos_router
     networks:
       app-network:
         ipv4_address: 173.17.0.2
     environment:
-      MONGODB_URL: "mongodb://mongodb1"
+      MONGODB_URL: "mongodb://mongos_router"
       MONGODB_DATABASE_NAME: "somedb"
 
   # mongodb1:
@@ -115,7 +117,6 @@ services:
       test: [ "CMD", "mongo", "--eval", "db.adminCommand('ping')" ]
       interval: 5s
       start_period: 10s
-
 
 volumes:
   config-data:
