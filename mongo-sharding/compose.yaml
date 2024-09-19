@@ -34,6 +34,7 @@ services:
       app-network:
         ipv4_address: 173.17.0.10
     volumes:
+      - ./scripts:/scripts
       - config-data:/data/db
     command:
       [
@@ -67,6 +68,8 @@ services:
         "--port",
         "27020"
       ]
+    volumes:
+      - ./scripts:/scripts
     healthcheck:
       test: [ "CMD", "mongo", "--eval", "db.adminCommand('ping')" ]
       interval: 5s
@@ -80,6 +83,7 @@ services:
       app-network:
         ipv4_address: 173.17.0.31
     volumes:
+      - ./scripts:/scripts
       - shard1-data:/data/db
     command:
       [
@@ -103,6 +107,7 @@ services:
       app-network:
         ipv4_address: 173.17.0.32
     volumes:
+      - ./scripts:/scripts
       - shard2-data:/data/db
     command:
       [
