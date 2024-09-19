@@ -74,16 +74,16 @@ services:
     image: mongo:latest
     container_name: shard1
     restart: always
-    # networks:
-    #   app-network:
-    #     ipv4_address: 173.17.0.9
+    networks:
+      app-network:
+        ipv4_address: 173.17.0.11
     volumes:
       - shard1-data:/data/db
     command:
       [
         "--shardsvr",
         "--replSet",
-        "shard1", //название реплики
+        "shard1",
         "--bind_ip_all",
         "--port",
         "27018"
@@ -99,15 +99,15 @@ services:
     restart: always
     networks:
       app-network:
-        ipv4_address: 173.17.0.8
+        ipv4_address: 173.17.0.12
     volumes:
       - shard2-data:/data/db
     command:
       [
-        "--shardsvr", //запуск в режиме шардинга
+        "--shardsvr",
         "--replSet",
-        "shard2", //название реплик
-        "--bind_ip_all", // обратите внимание - она отличается от реплики 1-го шарда
+        "shard2",
+        "--bind_ip_all",
         "--port",
         "27019"
       ]
@@ -128,4 +128,4 @@ networks:
     ipam:
       driver: default
       config:
-        - subnet: 173.17.0.0/16
+        - subnet: 173.17.0.0/24
