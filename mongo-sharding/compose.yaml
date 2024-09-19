@@ -22,15 +22,38 @@ services:
   #   volumes:
   #     - mongodb1_data_container:/data/db
 
+  mongos_router:
+    image: mongo:latest
+    container_name: mongos_router
+    restart: always
+    ports:
+      - "27020:27020"
+    # networks:
+    #   app-network:
+    #     ipv4_address: 173.17.0.7
+    command:
+      [
+        "mongos",
+        "--configdb",
+        "config_server/configSrv:27017",
+        "--bind_ip_all",
+        "--port",
+        "27020"
+      ]
+    healthcheck:
+      test: [ "CMD", "mongo", "--eval", "db.adminCommand('ping')" ]
+      interval: 5s
+      start_period: 10s
+
   configSrv:
     image: mongo:latest
     container_name: configSrv
     restart: always
     ports:
       - "27017:27017"
-    networks:
-      app-network:
-        ipv4_address: 173.17.0.10
+    # networks:
+    #   app-network:
+    #     ipv4_address: 173.17.0.10
     volumes:
       - config-data:/data/db
     command:
@@ -47,36 +70,13 @@ services:
       interval: 5s
       start_period: 10s
 
-  mongos_router:
-    image: mongo:latest
-    container_name: mongos_router
-    restart: always
-    ports:
-      - "27020:27020"
-    networks:
-      app-network:
-        ipv4_address: 173.17.0.7
-    command:
-      [
-        "mongos", //обычная mongo в режиме роутера
-        "--configdb",
-        "config_server/configSrv:27017",
-        "--bind_ip_all",
-        "--port",
-        "27020"
-      ]
-    healthcheck:
-      test: [ "CMD", "mongo", "--eval", "db.adminCommand('ping')" ]
-      interval: 5s
-      start_period: 10s
-
   shard1:
     image: mongo:latest
     container_name: shard1
     restart: always
-    networks:
-      app-network:
-        ipv4_address: 173.17.0.9
+    # networks:
+    #   app-network:
+    #     ipv4_address: 173.17.0.9
     volumes:
       - shard1-data:/data/db
     command:
