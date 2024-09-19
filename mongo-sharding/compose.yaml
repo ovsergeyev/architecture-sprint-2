@@ -1,6 +1,6 @@
 services:
   pymongo_api:
-    container_name: mongo-sharding
+    container_name: pymongo_api
     build:
       context: api_app
       dockerfile: Dockerfile
