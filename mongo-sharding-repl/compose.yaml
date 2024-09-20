@@ -1,6 +1,6 @@
 services:
   pymongo_api:
-    container_name: pymongo_api
+    container_name: mongo-sharding-repl
     build:
       context: api_app
       dockerfile: Dockerfile
@@ -8,12 +8,12 @@ services:
     ports:
       - 8080:8080
     depends_on:
-      - mongos_router
+      - mongos_router_repl
     networks:
       app-network:
-        ipv4_address: 173.17.0.2
+        ipv4_address: 173.17.4.2
     environment:
-      MONGODB_URL: "mongodb://mongos_router:27020"
+      MONGODB_URL: "mongodb://mongos_router_repl:27020"
       MONGODB_DATABASE_NAME: "somedb"
 
   # mongodb1:
@@ -24,18 +24,18 @@ services:
   #   volumes:
   #     - mongodb1_data_container:/data/db
 
-  configSrv:
+  configSrv_repl:
     image: mongo:latest
-    container_name: configSrv
+    container_name: configSrv_repl
     restart: always
     ports:
       - "27017:27017"
     networks:
       app-network:
-        ipv4_address: 173.17.0.10
+        ipv4_address: 173.17.4.10
     volumes:
       - ./scripts:/scripts
-      - config-data:/data/db
+      - config-data-repl:/data/db
     command:
       [
         "--configsvr",
@@ -50,20 +50,20 @@ services:
       interval: 5s
       start_period: 10s
 
-  mongos_router:
+  mongos_router_repl:
     image: mongo:latest
-    container_name: mongos_router
+    container_name: mongos_router_repl
     restart: always
     ports:
       - "27020:27020"
     networks:
       app-network:
-        ipv4_address: 173.17.0.20
+        ipv4_address: 173.17.4.20
     command:
       [
         "mongos",
         "--configdb",
-        "config_server/configSrv:27017",
+        "config_server/configSrv_repl:27017",
         "--bind_ip_all",
         "--port",
         "27020"
@@ -81,10 +81,10 @@ services:
     restart: always
     networks:
       app-network:
-        ipv4_address: 173.17.0.31
+        ipv4_address: 173.17.4.31
     volumes:
       - ./scripts:/scripts
-      - shard1-data:/data/db
+      - shard01-a-data:/data/db
     command:
       [
         "--shardsvr",
@@ -105,10 +105,10 @@ services:
     restart: always
     networks:
       app-network:
-        ipv4_address: 173.17.0.32
+        ipv4_address: 173.17.4.32
     volumes:
       - ./scripts:/scripts
-      - shard1-data:/data/db
+      - shard01-b-data:/data/db
     command:
       [
         "--shardsvr",
@@ -129,10 +129,10 @@ services:
     restart: always
     networks:
       app-network:
-        ipv4_address: 173.17.0.33
+        ipv4_address: 173.17.4.33
     volumes:
       - ./scripts:/scripts
-      - shard1-data:/data/db
+      - shard01-c-data:/data/db
     command:
       [
         "--shardsvr",
@@ -153,10 +153,10 @@ services:
     restart: always
     networks:
       app-network:
-        ipv4_address: 173.17.0.41
+        ipv4_address: 173.17.4.41
     volumes:
       - ./scripts:/scripts
-      - shard2-data:/data/db
+      - shard02-a-data:/data/db
     command:
       [
         "--shardsvr",
@@ -177,10 +177,10 @@ services:
     restart: always
     networks:
       app-network:
-        ipv4_address: 173.17.0.42
+        ipv4_address: 173.17.4.42
     volumes:
       - ./scripts:/scripts
-      - shard2-data:/data/db
+      - shard02-b-data:/data/db
     command:
       [
         "--shardsvr",
@@ -201,10 +201,10 @@ services:
     restart: always
     networks:
       app-network:
-        ipv4_address: 173.17.0.43
+        ipv4_address: 173.17.4.43
     volumes:
       - ./scripts:/scripts
-      - shard2-data:/data/db
+      - shard02-c-data:/data/db
     command:
       [
         "--shardsvr",
@@ -220,9 +220,13 @@ services:
       start_period: 10s
 
 volumes:
-  config-data:
-  shard1-data:
-  shard2-data:
+  config-data-repl:
+  shard01-a-data:
+  shard01-b-data:
+  shard01-c-data:
+  shard02-a-data:
+  shard02-b-data:
+  shard02-c-data:
 
 networks:
   app-network:
@@ -230,4 +234,4 @@ networks:
     ipam:
       driver: default
       config:
-        - subnet: 173.17.0.0/24
+        - subnet: 173.17.4.0/24
