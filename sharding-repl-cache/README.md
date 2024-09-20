@@ -1,5 +1,9 @@
 Инструкция по развертыванию:
 
+docker exec -it redis_1 /bin/bash
+echo "yes" | redis-cli --cluster create   173.17.4.151:6379   173.17.4.152:6379   173.17.4.153:6379   173.17.4.154:6379   173.17.4.155:6379   173.17.4.156:6379 --cluster-replicas 1
+
+
   Переход в директорию и запуск контейнеров:
     cd mongo-sharding
     docker-compose up -d
@@ -16,3 +20,5 @@
   Просмотр заполнения шардов:
     sh ./scripts/count-shard01.sh
     sh ./scripts/count-shard02.sh
+
+uvicorn app:app --host 0.0.0.0 --port 8081
