@@ -14,5 +14,5 @@
     sh ./scripts/mongo-init.sh
 
   Просмотр заполнения шардов:
-    sh ./scripts/count-shard1.sh
-    sh ./scripts/count-shard2.sh
+    sh ./scripts/count-shard01.sh
+    sh ./scripts/count-shard02.sh
