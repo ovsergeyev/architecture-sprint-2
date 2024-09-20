@@ -4,7 +4,7 @@
 # Колво документов
 ###
 
-docker compose exec -T shard1 mongosh --port 27018 <<EOF
+docker compose exec -T shard01-a mongosh --port 27101 <<EOF
 use somedb
 db.helloDoc.countDocuments()
 EOF
