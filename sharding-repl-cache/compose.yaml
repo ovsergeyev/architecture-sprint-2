@@ -15,6 +15,7 @@ services:
     environment:
       MONGODB_URL: "mongodb://mongos_router_repl:27020"
       MONGODB_DATABASE_NAME: "somedb"
+      REDIS_URL: "redis://redis_1:6379"
 
   configSrv_repl:
     image: mongo:latest
