@@ -1,11 +1,7 @@
 Инструкция по развертыванию:
 
-docker exec -it redis_1 /bin/bash
-echo "yes" | redis-cli --cluster create   173.17.4.151:6379   173.17.4.152:6379   173.17.4.153:6379   173.17.4.154:6379   173.17.4.155:6379   173.17.4.156:6379 --cluster-replicas 1
-
-
   Переход в директорию и запуск контейнеров:
-    cd mongo-sharding
+    cd sharding-repl-cache
     docker-compose up -d
 
   Конфигурация сервера конфигурации, шардов и роутера:
