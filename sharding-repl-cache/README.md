@@ -16,5 +16,3 @@
   Просмотр заполнения шардов:
     sh ./scripts/count-shard01.sh
     sh ./scripts/count-shard02.sh
-
-uvicorn app:app --host 0.0.0.0 --port 8081
